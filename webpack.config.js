@@ -1,14 +1,13 @@
 const webpack = require('webpack');
 const path = require('path');
-const CopyPlugin = require('copy-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
-  entry: './src/index.js',
+  entry: './src/js/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'js/bundle.js'
   },
   module: {
     rules: [
@@ -20,28 +19,32 @@ const config = {
       {
         test: /\.scss$/,
         use: [
-          MiniCssExtractPlugin.loader,
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              publicPath: ''
+            }
+          },
           'css-loader',
           'sass-loader'
         ]
       },
       {
-        test: /\.png$/,
+        test: /\.(png)$/,
         use: [
           {
-            loader: 'url-loader',
+            loader: 'file-loader',
             options: {
-              mimetype: 'image/png'
+              name: '[name].[ext]',
+              outputPath: './images/',
+              useRelativePath: true,
             }
-          }
+          },
         ]
       }
     ]
   },
   plugins: [
-    new CopyPlugin({
-      patterns: [{ from: 'index.html' }],
-    }),
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin()
   ]
