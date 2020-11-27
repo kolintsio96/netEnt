@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const config = {
@@ -28,25 +29,15 @@ const config = {
           'css-loader',
           'sass-loader'
         ]
-      },
-      {
-        test: /\.(png)$/,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: '[name].[ext]',
-              outputPath: './images/',
-              useRelativePath: true,
-            }
-          },
-        ]
       }
     ]
   },
   plugins: [
     new MiniCssExtractPlugin(),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [{ from: __dirname+'/src/images', to: __dirname+'/dist/images' }],
+    }),
   ]
 };
 
