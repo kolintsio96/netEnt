@@ -1,7 +1,7 @@
 .idea/
 .cache/
 coverage/
-dist/*
+src/*
 !dist/index.html
 node_modules/
 *.log

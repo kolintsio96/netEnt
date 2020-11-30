@@ -80,7 +80,7 @@ let appLoaded = (app) => {
         running = false;
     }
 
-    app.ticker.add((delta) => {
+    app.ticker.add(() => {
         for (let i = 0; i < reels.length; i++) {
             const r = reels[i];
             r.blur.blurY = (r.position - r.previousPosition) * 8;
@@ -102,7 +102,7 @@ let appLoaded = (app) => {
         }
     });
 
-    app.ticker.add((delta) => {
+    app.ticker.add(() => {
         const now = Date.now();
         const remove = [];
         for (let i = 0; i < tweening.length; i++) {
