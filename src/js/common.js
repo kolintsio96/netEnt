@@ -1,4 +1,5 @@
 import * as PIXI from "pixi.js";
+let getSize = (size) => size/defaultWidth * window.innerWidth;
 const styleLoadingText = new PIXI.TextStyle({
     fontFamily: 'Arial',
     fontSize: 36,
@@ -18,8 +19,14 @@ const styleWonText = new PIXI.TextStyle({
     dropShadowAngle: Math.PI / 6,
     dropShadowDistance: 6,
 });
+const styleCounter = new PIXI.TextStyle({
+    fontFamily: 'Arial',
+    fontSize: 24,
+    fill: '#fbea04',
+    stroke: '#000000',
+    strokeThickness: 2,
+});
 const defaultWidth = 960;
-let getSize = (size) => size/defaultWidth * window.innerWidth;
 const AppConfig = {
     windowConfig: {
         backgroundColor: 0xffffff,
@@ -40,6 +47,14 @@ const AppConfig = {
     countRows: 3,
     styleLoadingText,
     styleWonText,
+    styleCounter,
+    counter:{
+        y: 10,
+        width:100,
+        height: 100,
+        winPoint: 10,
+        runSlot: -5
+    },
     images: {
         slotsIcons:[
             './dist/images/SYM1-min.png',

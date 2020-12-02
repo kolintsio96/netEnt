@@ -1,6 +1,7 @@
 import * as PIXI from "pixi.js";
 import AppConfig from "../../../../common";
-import winScreen from "../winScreen";
+import textScreen from "../textScreen";
+import counterBlock from "../../../counter";
 
 let buttonStart = (app, reels) => {
     const tweening = [];
@@ -12,7 +13,7 @@ let buttonStart = (app, reels) => {
             let newArr = new Array(...reel.symbols);
             let sortedArray = newArr.sort((a, b) => {return (a.y > b.y) ? 1 : (a.y < b.y) ? -1 : 0});
             sortedArray.forEach((icon, k) => {
-                if(k !== 0){
+                if(k !== 0 && icon.iconId !== 0){
                     if(result.hasOwnProperty(`row_${k}`)){
                         result[`row_${k}`].push(icon.iconId);
                     }else{
@@ -27,18 +28,23 @@ let buttonStart = (app, reels) => {
         };
         for(let key in result){
             let set = [...new Set(result[key])];
-            set = set.filter(id => id !== 0);
             if(set.length <= 1){
                 youWin = true;
-                winScreen(app, false, callback);
+                counterBlock(app, AppConfig.counter.winPoint);
+                textScreen(app, false,'YOU WON !', callback);
                 setTimeout(() => {
-                    winScreen(app, true, callback);
+                    textScreen(app, true,'YOU WON !', callback);
                 }, AppConfig.hideWinBlock);
                 return false;
             }
         }
         if(!youWin){
-            callback();
+            let countMonet = counterBlock(app);
+            if(countMonet === 0){
+                textScreen(app, false,'YOU LOSE !');
+            }else {
+                callback();
+            }
         }
     };
     let backout = (amount) => {
@@ -65,6 +71,8 @@ let buttonStart = (app, reels) => {
     };
     let startPlay = () => {
         if (running) return;
+        counterBlock(app, AppConfig.counter.runSlot);
+
         running = true;
         button.texture = PIXI.Texture.from(AppConfig.images.disableButton);
         for (let i = 0; i < reels.length; i++) {

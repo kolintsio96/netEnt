@@ -3,11 +3,10 @@ import AppConfig from './../../../../common';
 
 let temp,
     isDestroyed = false;
-
-let winScreen = (app, close = false, callback) => {
+let textScreen = (app, close = false, text, callback = null) => {
     const container = new PIXI.Graphics();
     const textBlock = new PIXI.Graphics();
-    const winText = new PIXI.Text('YOU WON !', AppConfig.styleWonText);
+    const winText = new PIXI.Text(text, AppConfig.styleWonText);
     const positionTop = (app.screen.height - AppConfig.rowHeight * 3) / 2;
     const positionLeft = AppConfig.winPositionLeft;
 
@@ -16,7 +15,7 @@ let winScreen = (app, close = false, callback) => {
     textBlock.beginFill(0, 0.5);
     textBlock.drawRect(positionLeft, positionTop, AppConfig.columnWidth * 3 + AppConfig.positionWinRight, AppConfig.rowHeight * 3);
 
-    winText.x = Math.round((app.screen.width / 2) - (winText.width / 2));
+    winText.x = Math.round((textBlock.width / 2) - (winText.width / 2)) + AppConfig.positionLeft;
     winText.y = Math.round((app.screen.height / 2) - (winText.height / 2));
 
     container.buttonMode = true;
@@ -24,7 +23,7 @@ let winScreen = (app, close = false, callback) => {
 
     let destroyTextBlock = () => {
         temp.destroy();
-        callback();
+        !!callback && callback();
     }
     container.addListener('pointerdown', () => {
         isDestroyed = true;
@@ -44,4 +43,4 @@ let winScreen = (app, close = false, callback) => {
     }
 
 };
-export default winScreen;
+export default textScreen;

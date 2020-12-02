@@ -2,6 +2,7 @@ import * as PIXI from "pixi.js";
 import loadingScreen from "../loadingScreen";
 import AppConfig from "../../common";
 import buttonStart from "./Components/buttonStart";
+import counterBlock from "../counter";
 
 let appLoaded = (app) => {
     const slotTextures = [];
@@ -10,7 +11,7 @@ let appLoaded = (app) => {
     });
 
     loadingScreen(app, true);
-
+    counterBlock(app, 30);
     const reels = [];
     const reelContainer = new PIXI.Container();
     for (let i = 0; i < AppConfig.countColumns; i++) {
