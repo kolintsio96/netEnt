@@ -54,7 +54,7 @@ const AppConfig = {
         height: 100,
         winPoint: 10,
         runSlot: -5,
-        initialPoint: 10
+        initialPoint: 30
     },
     images: {
         slotsIcons:[
