@@ -2,7 +2,7 @@ import * as PIXI from "pixi.js";
 let getSize = (size) => size/defaultWidth * window.innerWidth;
 const styleLoadingText = new PIXI.TextStyle({
     fontFamily: 'Arial',
-    fontSize: 36,
+    fontSize: 72,
     fontWeight: 'bold',
     fill: '#ffffff'
 });

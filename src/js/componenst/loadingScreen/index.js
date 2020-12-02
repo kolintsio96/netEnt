@@ -14,7 +14,7 @@ class LoadingScreen{
         this.textBlock.addChild(this.loadingText);
     }
     setTextPosition(){
-        this.loadingText.x = Math.round((this.textBlock.width - this.loadingText.width) / 2);
+        this.loadingText.x = Math.round((this.app.screen.width / 2) - (this.loadingText.width / 2));
         this.loadingText.y = Math.round((this.app.screen.height / 2) - (this.loadingText.height / 2));
     }
     destroy(){
