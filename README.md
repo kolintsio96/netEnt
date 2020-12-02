@@ -1,4 +1,4 @@
-# netent
+# netEnt
 
 Empty project.
 
@@ -21,13 +21,3 @@ To create a development build:
 ```sh
 npm run build-dev
 ```
-
-## Running
-
-```sh
-node dist/bundle.js
-```
-
-## Credits
-
-Made with [createapp.dev](https://createapp.dev/)
