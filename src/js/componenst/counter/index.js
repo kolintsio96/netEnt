@@ -1,25 +1,34 @@
 import * as PIXI from "pixi.js";
-import AppConfig from './../../common';
+import AppConfig from '../../config';
 
-let totalCount = 0;
-let counterText;
-
-let counterBlock = (app, count = 0) => {
-    const textBlock = new PIXI.Graphics();
-    totalCount += count;
-    if(!counterText){
-        counterText = new PIXI.Text(`MONEY: ${totalCount}`, AppConfig.styleCounter);
-        textBlock.beginFill(0, 0.5);
-        textBlock.drawRect(0, 0, AppConfig.counter.width, AppConfig.counter.height);
-        counterText.x = app.screen.width - counterText.width - AppConfig.counter.y - 15;
-        counterText.y = AppConfig.counter.y;
-
-        textBlock.addChild(counterText);
-        app.stage.addChild(counterText);
-    }else {
-        counterText.text = `MONEY: ${totalCount}`;
+class CounterBlock{
+    constructor(app) {
+        this.app = app;
+        this.totalCount = AppConfig.counter.initialPoint;
+        this.textBlock = new PIXI.Graphics();
+        this.counterText = new PIXI.Text(`MONEY: ${this.totalCount}`, AppConfig.styleCounter);
+        this.init();
     }
-    return totalCount;
-
-};
-export default counterBlock;
+    get getTotalCount(){
+        return this.totalCount;
+    }
+    setTotalCount(count){
+        this.totalCount += count;
+        this.counterText.text = `MONEY: ${this.totalCount}`;
+    }
+    addTextBlockConfig(){
+        this.textBlock.beginFill(0, 0.5);
+        this.textBlock.drawRect(0, 0, AppConfig.counter.width, AppConfig.counter.height);
+        this.textBlock.addChild(this.counterText);
+    }
+    setTextPosition(){
+        this.counterText.x = this.app.screen.width - this.counterText.width - AppConfig.counter.y - 15;
+        this.counterText.y = AppConfig.counter.y;
+    }
+    init(){
+        this.setTextPosition();
+        this.addTextBlockConfig();
+        this.app.stage.addChild(this.counterText);
+    }
+}
+export default CounterBlock;

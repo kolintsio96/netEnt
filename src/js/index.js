@@ -1,18 +1,30 @@
 import "../style/styles.scss";
 import * as PIXI from 'pixi.js';
-import AppConfig from './common';
+import AppConfig from './config';
 import loadingScreen from './componenst/loadingScreen'
-import appLoaded from './componenst/game'
-import appBackground from "./componenst/appBackground";
+import AppLoaded from './componenst/game'
+import AppBackground from "./componenst/appBackground";
 
-const app = new PIXI.Application(AppConfig.windowConfig);
-const nodeApp = document.getElementById('app');
-nodeApp.appendChild(app.view);
-
-appBackground(app);
-loadingScreen(app);
-
-AppConfig.images.slotsIcons.forEach(image => {
-    app.loader.add(image, image);
-});
-app.loader.load(appLoaded.bind(this, app));
+class App {
+    constructor() {
+        this.app = new PIXI.Application(AppConfig.windowConfig);
+        this.loadingScreen = new loadingScreen(this.app);
+        this.nodeApp = document.getElementById('app');
+        this.init();
+    }
+    loadApp(){
+        AppConfig.images.slotsIcons.forEach(image => {
+            this.app.loader.add(image, image);
+        });
+        this.app.loader.load(() => {
+            new AppLoaded(this.app, this.loadingScreen);
+        });
+    }
+    init(){
+        this.nodeApp.appendChild(this.app.view);
+        new AppBackground(this.app);
+        this.loadingScreen.init();
+        this.loadApp();
+    }
+}
+new App();

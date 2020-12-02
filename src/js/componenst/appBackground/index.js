@@ -1,11 +1,21 @@
 import * as PIXI from "pixi.js";
-import AppConfig from "../../common";
+import AppConfig from "../../config";
 
-let appBackground = (app) => {
-    const background = PIXI.Sprite.from(AppConfig.images.appBg);
-    background.width = app.screen.width;
-    background.height = app.screen.height;
-    app.stage.addChild(background);
-};
+class AppBackground {
+    constructor(app) {
+        this.app  = app;
+        this.background = PIXI.Sprite.from(AppConfig.images.appBg);
+        this.init();
+    }
+    setSize(){
+        this.background.width = this.app.screen.width;
+        this.background.height = this.app.screen.height;
+    }
+    init(){
+        this.setSize();
+        this.app.stage.addChild(this.background);
+    }
 
-export default appBackground;
+}
+
+export default AppBackground;
